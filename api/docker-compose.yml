@@ -1,0 +1,18 @@
+# Specify the Docker Compose file version
+version: "1.0"
+
+services:
+  # Define a service named `fastapi`
+  fastapi:
+    # Build the container image from the Dockerfile in the `./app` directory
+    build:
+      context: ./app
+      dockerfile: ./Dockerfile
+      # Map port 8484 of the container to port 8484 of the host machine
+    ports:
+      - "8484:8484"
+      # Run the `uvicorn` command to start the FastAPI application
+    command: "uvicorn main:app --proxy-headers --host 0.0.0.0 --port 8484 --reload"
+    # Mount the `./app/src` directory on the host machine to the `/usr/src/app` directory in the container
+    volumes:
+      - "./app/src:/usr/src/app"

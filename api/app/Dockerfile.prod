@@ -1,0 +1,18 @@
+# Use the official AWS Lambda Python runtime image for Python 3.9
+FROM public.ecr.aws/lambda/python:3.11
+
+# Copy the requirements.txt file to the Lambda function's root directory
+COPY requirements.txt ${LAMBDA_TASK_ROOT}
+
+# Ensure pip is installed and install dependencies from requirements.txt
+RUN python3 -m ensurepip
+RUN pip install -r requirements.txt
+
+# Add the source code from the 'src' directory to the Lambda function's root directory
+ADD src ${LAMBDA_TASK_ROOT}
+
+# Set the PYTHONPATH environment variable to include the Lambda function's root directory
+ENV PYTHONPATH "${PYTHONPATH}:${LAMBDA_TASK_ROOT}"
+
+# Specify the default command to execute when the container starts
+CMD [ "main.handler" ]
