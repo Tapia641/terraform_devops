@@ -3,3 +3,4 @@ api/app/src/venv
 *.terraform.lock.hcl
 *.tfstate
 *.tfstate.backup
+api/app/src/__pycache__
